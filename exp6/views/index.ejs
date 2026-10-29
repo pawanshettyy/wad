@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+<% if (login) { %>
+  <h1>Login</h1><p><%= error %></p>
+  <form method="POST" action="/login">
+    <input name="username" placeholder="Username" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button>Login</button>
+  </form>
+<% } else { %>
+  <h1>Todos</h1><a href="/logout">Logout</a>
+  <form id="form"><input id="task" placeholder="Task" required><button>Add</button></form>
+  <ul id="list"></ul>
+  <script>
+    const list = document.querySelector('#list');
+    const api = (url, options) => fetch(url, options).then((r) => r.json());
+    async function load() {
+      list.innerHTML = '';
+      (await api('/api/todos')).forEach((todo) => {
+        const item = document.createElement('li');
+        item.textContent = todo.task + (todo.completed ? ' (done)' : '');
+        item.onclick = () => api('/api/todos/' + todo.id, {
+          method: 'PUT', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({task: todo.task, completed: !todo.completed})
+        }).then(load);
+        const button = document.createElement('button');
+        button.textContent = 'Delete';
+        button.onclick = (event) => {
+          event.stopPropagation();
+          api('/api/todos/' + todo.id, {method: 'DELETE'}).then(load);
+        };
+        item.append(button); list.append(item);
+      });
+    }
+    form.onsubmit = (event) => {
+      event.preventDefault();
+      api('/api/todos', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({task: task.value})
+      }).then(() => { form.reset(); load(); });
+    };
+    load();
+  </script>
+<% } %>
+</body>
+</html>
