@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= page %></title></head>
+<body>
+<% if (page === 'login' || page === 'register') { %>
+  <h1><%= page %></h1>
+  <p><%= error %></p>
+  <form method="POST" action="/<%= page %>">
+    <% if (page === 'register') { %><input name="name" placeholder="Name" required><% } %>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button><%= page %></button>
+  </form>
+  <a href="/<%= page === 'login' ? 'register' : 'login' %>">
+    <%= page === 'login' ? 'Register' : 'Login' %>
+  </a>
+<% } else if (page === 'edit') { %>
+  <h1>Edit user</h1>
+  <form method="POST" action="/update/<%= user.id %>">
+    <input name="name" value="<%= user.name %>" required>
+    <input name="email" value="<%= user.email %>" required>
+    <input name="password" placeholder="New password" required>
+    <button>Update</button>
+  </form>
+  <a href="/dashboard">Back</a>
+<% } else { %>
+  <h1>Welcome <%= user.name %></h1><a href="/logout">Logout</a>
+  <table border="1">
+    <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
+    <% users.forEach((item) => { %>
+      <tr><td><%= item.name %></td><td><%= item.email %></td>
+        <td><a href="/edit/<%= item.id %>">Edit</a>
+        <a href="/delete/<%= item.id %>">Delete</a></td></tr>
+    <% }); %>
+  </table>
+<% } %>
+</body>
+</html>
