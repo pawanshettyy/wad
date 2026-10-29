@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit User</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Edit User</h1>
+
+  <form action="/update/<%= user.id %>" method="POST">
+    <input name="name" value="<%= user.name %>" required>
+    <input name="email" type="email" value="<%= user.email %>" required>
+    <input name="password" type="password" value="<%= user.password %>" required>
+    <button type="submit">Update</button>
+  </form>
+
+  <a href="/">Back</a>
+</body>
+</html>
