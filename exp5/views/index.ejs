@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= page %></title></head>
+<body>
+<% if (page === 'login') { %>
+  <h1>Login</h1>
+  <p><%= error %></p>
+  <form method="POST" action="/login">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input name="username" placeholder="Username" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button>Login</button>
+  </form>
+<% } else { %>
+  <h1>Welcome, <%= username %></h1>
+  <form method="POST" action="/logout">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button>Logout</button>
+  </form>
+<% } %>
+</body>
+</html>
