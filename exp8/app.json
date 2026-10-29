@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "Stock App",
+    "slug": "stock-app",
+    "version": "1.0.0",
+    "orientation": "portrait"
+  }
+}
