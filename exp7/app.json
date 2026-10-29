@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "Blog App",
+    "slug": "blog-app",
+    "version": "1.0.0",
+    "orientation": "portrait"
+  }
+}
